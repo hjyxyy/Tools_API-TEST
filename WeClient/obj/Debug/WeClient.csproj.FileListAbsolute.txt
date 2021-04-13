@@ -1,6 +1,5 @@
 C:\Users\h_y55\source\repos\WeClient\WeClient\bin\Debug\WeClient.exe
 C:\Users\h_y55\source\repos\WeClient\WeClient\bin\Debug\WeClient.pdb
-C:\Users\h_y55\source\repos\WeClient\WeClient\obj\Debug\WeClient.csprojAssemblyReference.cache
 C:\Users\h_y55\source\repos\WeClient\WeClient\obj\Debug\MainWindow.g.cs
 C:\Users\h_y55\source\repos\WeClient\WeClient\obj\Debug\App.g.cs
 C:\Users\h_y55\source\repos\WeClient\WeClient\obj\Debug\WeClient_MarkupCompile.cache

@@ -26,67 +26,18 @@ namespace WeClient
 
         private static Queue<string> messages = new Queue<string>();
         private static string url = "http://127.0.0.1:8888/msg/";
+        private string BASE_REDIRECT_URL = "http://abc.com/123.php";
+
         private HttpListener _listener;
         public MainWindow()
         {
             InitializeComponent();
-            ThreadPool.QueueUserWorkItem(sender =>
-            {
-                while (true)
-                {
-                    this.txtLog.Dispatcher.BeginInvoke((Action)delegate
-                    {
-                        if(messages.Count > 0)
-                        {
-                            this.txtLog.AppendText(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff \r\n") + messages.Dequeue()+ "\r\n");
-                        }
-                       
-                        if (IsVerticalScrollBarAtBottom)
-                        {
-                            this.txtLog.ScrollToEnd();
-                        }
-                    });
-                    Thread.Sleep(600);
-                }
-            });
-
-            this.txtLog.AppendText("开始监听本地端口：\r\n");
-            //Console.WriteLine("开始监听本地端口：");
+           
             initHttpServer();
-            //Console.WriteLine("监听："+ httpListener.IsListening); 
+            this.LAB_TXT.Content = "初始化完成";
 
         }
-        public bool IsVerticalScrollBarAtBottom
-        {
-            get
-            {
-                bool atBottom = false;
-
-                this.txtLog.Dispatcher.Invoke((Action)delegate
-                {
-                    //if (this.txtLog.VerticalScrollBarVisibility != ScrollBarVisibility.Visible)
-                    //{
-                    //    atBottom= true;
-                    //    return;
-                    //}
-                    double dVer = this.txtLog.VerticalOffset;       //获取竖直滚动条滚动位置
-                    double dViewport = this.txtLog.ViewportHeight;  //获取竖直可滚动内容高度
-                    double dExtent = this.txtLog.ExtentHeight;      //获取可视区域的高度
-
-                    if (dVer + dViewport >= dExtent)
-                    {
-                        atBottom = true;
-                    }
-                    else
-                    {
-                        atBottom = false;
-                    }
-                });
-
-                return atBottom;
-            }
-        }
-
+       
         
 
         public void initHttpServer()
@@ -129,7 +80,9 @@ namespace WeClient
                             break;
                     }
                     // WriteToStatus("收到数据：" + content);
-                    messages.Enqueue(content);
+                    // messages.Enqueue(content);
+
+                    redirectMsg(content);
 
                     //构造Response响应
                     HttpListenerResponse response = context.Response;
@@ -153,7 +106,25 @@ namespace WeClient
                 //WriteToStatus(ex.Message);
             }
         }
-      
 
+        private void redirectMsg(string msg)
+        {
+            ThreadPool.QueueUserWorkItem((obj) =>
+            {
+                bool isSuccess = false;
+
+                var res = HttpRequestHelper.HttpPost(BASE_REDIRECT_URL,msg, ref isSuccess);
+                if (!isSuccess)
+                {
+                    Console.WriteLine("转发失败");
+                }
+            }, null);
+        }
+
+
+        private void BTN_OK_Click(object sender, RoutedEventArgs e)
+        {
+            BASE_REDIRECT_URL = this.TXT_URL.Text;
+        }
     }
 }

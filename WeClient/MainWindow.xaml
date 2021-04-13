@@ -5,12 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeClient"
         mc:Ignorable="d"
-        Title="微信消息" Height="450" Width="800">
-    <Grid>
-        <TextBox Name="txtLog" AcceptsReturn="True" 
-                 TextWrapping="Wrap" Foreground="Green"
-                 Grid.Row="1" Grid.ColumnSpan="2"
-                 VerticalScrollBarVisibility="Auto"
-                 HorizontalScrollBarVisibility="Auto"/>
-    </Grid>
+        Title="微信消息转发器" Height="285.429" Width="700.571">
+
+
+    <Canvas>
+        <Label Name="LAB_TXT" Content="正在初始化" Canvas.Left="28" Canvas.Top="30" Width="213"/>
+        <Label Content="请求转发到" Canvas.Left="28" Canvas.Top="79"/>
+        <TextBox Name="TXT_URL" Height="23" Canvas.Left="128" TextWrapping="Wrap" Text="http://abc.com/123.php" Canvas.Top="81" Width="241"/>
+        <Button Name="BTN_OK" Content="确定" Canvas.Left="384" Canvas.Top="81" Width="58" Height="23" Click="BTN_OK_Click"/>
+
+
+
+    </Canvas>
+
+
+
 </Window>
